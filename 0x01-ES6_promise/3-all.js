@@ -7,6 +7,6 @@ export default function handleProfileSignup() {
   promise1.then((value1) => {
     promise2.then((value2) => {
       console.log(`${value1.body} ${value2.firstName} ${value2.lastName}`);
-    }, (error) => { console.error('Signup system offline', error); });
-  }, (error) => { console.error('Signup system offline', error); });
+    }, () => { console.error(new Error('Signup system offline')); });
+  }, () => { console.error(new Error('Signup system offline')); });
 }
