@@ -8,10 +8,10 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
   return Promise.allSettled([promise1, promise2])
     .then((values) => {
       for (const value of values) {
-        if (value['status'] === 'rejected') {
-          value['reason'] = value['value'];
-          value['value'] = value['reason'];
-          delete value['reason'];
+        if (value.status === 'rejected') {
+          value.reason = value.value;
+          value.value = value.reason;
+          delete value.reason;
         }
       }
     });
