@@ -9,11 +9,11 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
   Promise.all([promise1, promise2])
     .then((values) => {
       for (const value of values) {
-        result.push({ status: value.status, value });
+        result.push({ status: 'fulfilled', value });
       }
     })
     .catch((error) => {
-      result.push({ status: error.status, value: error });
+      result.push({ status: 'rejected', value: error });
     });
 
   return result;
