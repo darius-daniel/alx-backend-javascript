@@ -1,5 +1,5 @@
 export default class Building {
-  constructor (sqft) {
+  constructor(sqft) {
     this._sqft = sqft;
   }
 
