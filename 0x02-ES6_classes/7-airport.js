@@ -8,10 +8,6 @@ export default class Airport {
     return this._code;
   }
 
-  toString() {
-    return `${this.constructor} [${this._code}] { _name: ${this._name}, _code: ${this._code}}`;
-  }
-
   get [Symbol.toStringTag]() {
     return this.code;
   }
