@@ -10,7 +10,8 @@ export default function cleanSet(set, startString) {
       if (!result) delimiter = '';
       else delimiter = '-';
 
-      const wordRemainder = word.slice(2 - word.indexOf(startString[-1]));
+      const sliceStart = word.lastIndexOf(startString[startString.length - 1]) + 1;
+      const wordRemainder = word.slice(sliceStart, word.length);
       result = `${result}${delimiter}${wordRemainder}`;
     }
   }
