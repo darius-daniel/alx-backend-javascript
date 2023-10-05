@@ -1,13 +1,13 @@
 export default function cleanSet(set, startString) {
   let result = '';
 
-  if (startString) {
+  if (startString.length > 0) {
     const words = [...set].filter((item) => item.startsWith(startString));
 
     for (const word of words) {
       let delimiter;
 
-      if (!result) delimiter = '';
+      if (result.length === 0) delimiter = '';
       else delimiter = '-';
 
       const sliceStart = word.lastIndexOf(startString[startString.length - 1]) + 1;
