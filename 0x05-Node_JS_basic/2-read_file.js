@@ -2,8 +2,8 @@ const fs = require('fs');
 
 function countStudents (path) {
   let fileContents;
-  const stdCS = [];
-  const stdSWE = [];
+  const CS_Students = [];
+  const SWE_Students = [];
 
   try {
     fileContents = fs.readFileSync(path, 'utf-8');
@@ -11,33 +11,40 @@ function countStudents (path) {
     throw new Error('Cannot load the database');
   }
 
-  const table = fileContents.split('\n');
+  const table = fileContents.split('\n').filter((value) => value !== '');
+  const columnTitles = {
+    'firstName': 0,
+    'lastName': 1,
+    'age': 2,
+    'field': 3
+  };
+
   for (const row of table) {
     const columns = row.split(',');
-    if (columns.includes('CS')) {
-      stdCS.push(columns[0]);
-    } else if (columns.includes('SWE')) {
-      stdSWE.push(columns[0]);
+    if (columns[columnTitles.field] === 'CS') {
+      CS_Students.push(columns[columnTitles.firstName]);
+    } else if (columns[columnTitles.field] === 'SWE') {
+      SWE_Students.push(columns[columnTitles.firstName]);
     }
   }
-  console.log(`Number of students: ${table.length - 2}`);
+  console.log(`Number of students: ${table.length - 1}`);
 
-  process.stdout.write(`Number of students in CS: ${stdCS.length}. List: `);
-  for (const idx in stdCS) {
+  process.stdout.write(`Number of students in CS: ${CS_Students.length}. List: `);
+  for (const idx in CS_Students) {
     let delimiter = '\n';
-    if (idx < stdCS.length - 1) {
+    if (idx < CS_Students.length - 1) {
       delimiter = ', ';
     }
-    process.stdout.write(`${stdCS[idx]}${delimiter}`);
+    process.stdout.write(`${CS_Students[idx]}${delimiter}`);
   }
 
-  process.stdout.write(`Number of students in CS: ${stdSWE.length}. List: `);
-  for (const idx in stdSWE) {
+  process.stdout.write(`Number of students in CS: ${SWE_Students.length}. List: `);
+  for (const idx in SWE_Students) {
     let delimiter = '\n';
-    if (idx < stdSWE.length - 1) {
+    if (idx < SWE_Students.length - 1) {
       delimiter = ', ';
     }
-    process.stdout.write(`${stdSWE[idx]}${delimiter}`);
+    process.stdout.write(`${SWE_Students[idx]}${delimiter}`);
   }
 }
 
