@@ -2,6 +2,8 @@ const fs = require('fs');
 
 function countStudents (path) {
   return new Promise((resolve, reject) => {
+    const namesPerField = {};
+
     fs.readFile(path, 'utf-8', (error, data) => {
       if (error) {
         reject(new Error('Cannot load the database'));
@@ -14,19 +16,19 @@ function countStudents (path) {
           'field': 3
         }
 
-        const SWE_Students = [];
-        const CS_Students = [];
-
         for (const row of table) {
-          const columns = row.split(',');
-          if (columns[columnTitles.field] === 'CS') {
-            CS_Students.push(columns[columnTitles.firstName]);
-          } else if (columns[columnTitles.field] === 'SWE') {
-            SWE_Students.push(columns[columnTitles.firstName]);
+          const column = row.split(',');
+          const field = column[columnTitles.field];
+          const firstName = column[columnTitles.firstName];
+
+          if (!Object.keys(namesPerField).includes(field)) {
+            namesPerField[field] = []
           }
+          namesPerField[field].push(firstName);
         }
+
+        const CS_Students = namesPerField['CS'];
         console.log(`Number of students: ${table.length - 1}`);
-      
         process.stdout.write(`Number of students in CS: ${CS_Students.length}. List: `);
         for (const idx in CS_Students) {
           let delimiter = '\n';
@@ -36,6 +38,7 @@ function countStudents (path) {
           process.stdout.write(`${CS_Students[idx]}${delimiter}`);
         }
       
+        const SWE_Students = namesPerField['SWE'];
         process.stdout.write(`Number of students in CS: ${SWE_Students.length}. List: `);
         for (const idx in SWE_Students) {
           let delimiter = '\n';
@@ -45,9 +48,9 @@ function countStudents (path) {
           process.stdout.write(`${SWE_Students[idx]}${delimiter}`);
         }
       }
-      resolve(process.exit)
-    })
-  })
+      resolve(namesPerField);
+    });
+  });
 }
 
 module.exports = countStudents;
