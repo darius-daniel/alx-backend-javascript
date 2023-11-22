@@ -35,8 +35,7 @@ const app = http.createServer((request, response) => {
           msg += `${student}${delimiter}`;
           idx += 1;
         }
-
-        response.end(msg);
+        response.end(msg.slice(0, msg.length - 1));
       })
       .catch((error) => {
         response.end(error.toString());
