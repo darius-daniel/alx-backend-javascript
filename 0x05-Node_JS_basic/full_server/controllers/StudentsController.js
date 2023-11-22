@@ -1,58 +1,59 @@
-const readDatabase = require('../utils.js');
+import readDatabase from '../utils';
 
 class StudentsController {
-
-  static getAllStudents (request, response) {
+  static getAllStudents(request, response) {
     readDatabase(request.db)
       .then((namesPerField) => {
-        let msg = 'This is the list of our students';
+        let msg = 'This is the list of our students\n';
 
         for (const field of Object.keys(namesPerField).sort()) {
-          msg += '\n' + `Number of students in ${field}: ${namesPerField[field].length}. List: `;
+          msg += `Number of students in ${field}: ${namesPerField[field].length}. List: `;
 
-          for (const index in namesPerField[field]) {
+          let idx = 0;
+          for (const student of namesPerField[field]) {
             let delimiter = '\n';
-            const firstName = namesPerField[field][index];
-
-            if (index < namesPerField[field].length - 1) {
+            if (idx < namesPerField[field].length - 1) {
               delimiter = ', ';
             }
-
-            msg += `${firstName}${delimiter}`;
+            msg += `${student}${delimiter}`;
+            idx += 1;
           }
         }
-        response.send(200, msg);
+        response.status().send(msg);
       })
       .catch(() => {
-        response.send(500, new Error('Cannot load the database'));
+        response.status(200).send(new Error('Cannot load the database'));
       });
   }
 
-  static getAllStudentsByMajor (request, response) {
-    const major = request.headers.major;
+  static getAllStudentsByMajor(request, response) {
+    const { major } = request.params;
 
     if (!['CS', 'SWE'].includes(major)) {
-      response.send(500, 'Major parameter must be CS or SWE');
+      response.status(500).send('Major parameter must be CS or SWE');
     } else {
-      readDatabase(request.db)
+      const database = process.argv[2];
+      readDatabase(database)
         .then((namesPerField) => {
           let msg = 'List: ';
 
-          for (const index in namesPerField.major) {
+          let idx = 0;
+          for (const student of namesPerField.major) {
             let delimiter = '\n';
-            if (index < namesPerField.major.length) {
+            if (idx < namesPerField.major.length) {
               delimiter = ', ';
             }
-            msg += `${namesPerField.major[index]}${delimiter}`;
+            msg += `${student}${delimiter}`;
+            idx += 1;
           }
-
-          response.send(200, msg);
+          response.status(200).send(msg);
         })
         .catch(() => {
-          response.send(500, 'Cannot load the database');
-        })
+          response.status(500).send('Cannot load the database');
+        });
     }
   }
 }
 
+export default StudentsController;
 module.exports = StudentsController;

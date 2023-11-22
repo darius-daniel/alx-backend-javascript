@@ -15,7 +15,7 @@ function readDatabase (path) {
         };
         const namesPerField = {};
 
-        for (const row of table) {
+        for (const row of table.slice(1)) {
           const column = row.split(',');
           const field = column[columnTitles.field];
           const firstName = column[columnTitles.firstName];
@@ -31,4 +31,5 @@ function readDatabase (path) {
   });
 }
 
+export default readDatabase;
 modules.export = readDatabase;
