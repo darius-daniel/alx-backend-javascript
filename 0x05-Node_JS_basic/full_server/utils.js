@@ -32,4 +32,4 @@ function readDatabase (path) {
 }
 
 export default readDatabase;
-modules.export = readDatabase;
+module.exports = readDatabase;
