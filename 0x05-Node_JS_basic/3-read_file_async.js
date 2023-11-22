@@ -43,7 +43,7 @@ function countStudents(path) {
             idx += 1;
           }
         }
-        process.stdout.write(msg);
+        console.log(msg.slice(0, msg.length - 1));
       }
       resolve(namesByField);
     });
