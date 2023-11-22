@@ -34,7 +34,7 @@ function countStudents(path) {
   for (const cls of Object.keys(namesByField)) {
     msg += `Number of students in ${cls}: ${namesByField[cls].length}. List: `;
 
-    let idx = 0 ;
+    let idx = 0;
     for (const student of namesByField[cls]) {
       let delimiter = '\n';
 

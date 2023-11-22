@@ -20,25 +20,25 @@ function countStudents(path) {
           const columns = row.split(',');
           const cls = columns[columnTitles.field];
           const fName = columns[columnTitles.firstName];
-      
+
           if (!Object.keys(namesByField).includes(cls)) {
             namesByField[cls] = [];
           }
           namesByField[cls].push(fName);
         }
-      
+
         let msg = `Number of students: ${table.length - 1}\n`;
         for (const cls of Object.keys(namesByField)) {
           msg += `Number of students in ${cls}: ${namesByField[cls].length}. List: `;
-      
-          let idx = 0 ;
+
+          let idx = 0;
           for (const student of namesByField[cls]) {
             let delimiter = '\n';
-      
+
             if (idx < namesByField[cls].length - 1) {
               delimiter = ', ';
             }
-      
+
             msg += `${student}${delimiter}`;
             idx += 1;
           }
