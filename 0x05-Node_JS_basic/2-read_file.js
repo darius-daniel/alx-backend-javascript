@@ -48,7 +48,7 @@ function countStudents(path) {
   msg += `Number of students in SWE: ${sweStudents.length}. List: `;
   idx = 0;
   for (const student of sweStudents) {
-    let delimiter = '';
+    let delimiter = '\n';
     if (idx < sweStudents.length - 1) {
       delimiter = ', ';
     }
@@ -56,7 +56,7 @@ function countStudents(path) {
     idx += 1;
   }
 
-  console.log(msg);
+  process.stdout.write(msg);
 }
 
 module.exports = countStudents;
