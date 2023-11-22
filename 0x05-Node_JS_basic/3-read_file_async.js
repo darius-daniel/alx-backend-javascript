@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-function countStudents (path) {
+function countStudents(path) {
   return new Promise((resolve, reject) => {
-    const namesPerField = {};
+    const namesByField = {};
 
     fs.readFile(path, 'utf-8', (error, data) => {
       if (error) {
@@ -10,45 +10,42 @@ function countStudents (path) {
       } else {
         const table = data.split('\n').filter((value) => value !== '');
         const columnTitles = {
-          'firstName': 0,
-          'lastName': 1,
-          'age': 2,
-          'field': 3
-        }
+          firstName: 0,
+          lastName: 1,
+          age: 2,
+          field: 3,
+        };
 
-        for (const row of table) {
-          const column = row.split(',');
-          const field = column[columnTitles.field];
-          const firstName = column[columnTitles.firstName];
-
-          if (!Object.keys(namesPerField).includes(field)) {
-            namesPerField[field] = []
+        for (const row of table.slice(1)) {
+          const columns = row.split(',');
+          const cls = columns[columnTitles.field];
+          const fName = columns[columnTitles.firstName];
+      
+          if (!Object.keys(namesByField).includes(cls)) {
+            namesByField[cls] = [];
           }
-          namesPerField[field].push(firstName);
-        }
-
-        const CS_Students = namesPerField['CS'];
-        console.log(`Number of students: ${table.length - 1}`);
-        process.stdout.write(`Number of students in CS: ${CS_Students.length}. List: `);
-        for (const idx in CS_Students) {
-          let delimiter = '\n';
-          if (idx < CS_Students.length - 1) {
-            delimiter = ', ';
-          }
-          process.stdout.write(`${CS_Students[idx]}${delimiter}`);
+          namesByField[cls].push(fName);
         }
       
-        const SWE_Students = namesPerField['SWE'];
-        process.stdout.write(`Number of students in CS: ${SWE_Students.length}. List: `);
-        for (const idx in SWE_Students) {
-          let delimiter = '\n';
-          if (idx < SWE_Students.length - 1) {
-            delimiter = ', ';
+        let msg = `Number of students: ${table.length - 1}\n`;
+        for (const cls of Object.keys(namesByField)) {
+          msg += `Number of students in ${cls}: ${namesByField[cls].length}. List: `;
+      
+          let idx = 0 ;
+          for (const student of namesByField[cls]) {
+            let delimiter = '\n';
+      
+            if (idx < namesByField[cls].length - 1) {
+              delimiter = ', ';
+            }
+      
+            msg += `${student}${delimiter}`;
+            idx += 1;
           }
-          process.stdout.write(`${SWE_Students[idx]}${delimiter}`);
         }
+        process.stdout.write(msg);
       }
-      resolve(namesPerField);
+      resolve(namesByField);
     });
   });
 }

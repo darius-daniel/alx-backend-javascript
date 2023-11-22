@@ -18,44 +18,34 @@ function countStudents(path) {
     field: 3,
   };
 
-  for (const row of table) {
+  for (const row of table.slice(1)) {
     const columns = row.split(',');
-    const field = columns[columnTitles.field];
-    const firstName = columns[columnTitles.firstName];
+    const cls = columns[columnTitles.field];
+    const fName = columns[columnTitles.firstName];
 
-    if (!Object.keys(namesByField).includes(field)) {
-      namesByField[field] = [];
+    if (!Object.keys(namesByField).includes(cls)) {
+      namesByField[cls] = [];
     }
 
-    namesByField[field].push(firstName);
+    namesByField[cls].push(fName);
   }
 
   let msg = `Number of students: ${table.length - 1}\n`;
-  const csStudents = namesByField.CS;
-  const sweStudents = namesByField.SWE;
+  for (const cls of Object.keys(namesByField)) {
+    msg += `Number of students in ${cls}: ${namesByField[cls].length}. List: `;
 
-  msg += `Number of students in CS: ${csStudents.length}. List: `;
-  let idx = 0;
-  for (const student of csStudents) {
-    let delimiter = '\n';
-    if (idx < csStudents.length - 1) {
-      delimiter = ', ';
+    let idx = 0 ;
+    for (const student of namesByField[cls]) {
+      let delimiter = '\n';
+
+      if (idx < namesByField[cls].length - 1) {
+        delimiter = ', ';
+      }
+
+      msg += `${student}${delimiter}`;
+      idx += 1;
     }
-    msg += `${student}${delimiter}`;
-    idx += 1;
   }
-
-  msg += `Number of students in SWE: ${sweStudents.length}. List: `;
-  idx = 0;
-  for (const student of sweStudents) {
-    let delimiter = '\n';
-    if (idx < sweStudents.length - 1) {
-      delimiter = ', ';
-    }
-    msg += `${student}${delimiter}`;
-    idx += 1;
-  }
-
   process.stdout.write(msg);
 }
 

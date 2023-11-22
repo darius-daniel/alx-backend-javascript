@@ -10,26 +10,26 @@ const app = http.createServer((request, response) => {
     let msg = 'This is a list of our students\n'
     countStudents(db)
       .then((namesPerField) => {
-        const CS_Students = namesPerField['CS'];
-        const SWE_Students = namesPerField['SWE'];
-        msg += `Number of students: ${CS_Students.length + SWE_Students.length}\n`;
-        msg += `Number of students in CS: ${CS_Students.length}. List: `;
+        const csStudents = namesPerField['CS'];
+        const sweStudents = namesPerField['SWE'];
+        msg += `Number of students: ${csStudents.length + sweStudents.length}\n`;
+        msg += `Number of students in CS: ${csStudents.length}. List: `;
 
-        for (const idx in CS_Students) {
+        for (const idx in csStudents) {
           let delimiter = '\n';
-          if (idx < CS_Students.length - 1) {
+          if (idx < csStudents.length - 1) {
             delimiter = ', ';
           }
-          msg +=`${CS_Students[idx]}${delimiter}`;
+          msg +=`${csStudents[idx]}${delimiter}`;
         }
       
-        msg += `Number of students in SWE: ${SWE_Students.length}. List: `;
-        for (const idx in SWE_Students) {
+        msg += `Number of students in SWE: ${sweStudents.length}. List: `;
+        for (const idx in sweStudents) {
           let delimiter = '\n';
-          if (idx < SWE_Students.length - 1) {
+          if (idx < sweStudents.length - 1) {
             delimiter = ', ';
           }
-          msg += `${SWE_Students[idx]}${delimiter}`;
+          msg += `${sweStudents[idx]}${delimiter}`;
         }
 
         response.end(msg);
