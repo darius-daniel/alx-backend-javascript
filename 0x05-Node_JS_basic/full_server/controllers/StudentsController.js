@@ -2,7 +2,8 @@ import readDatabase from '../utils';
 
 class StudentsController {
   static getAllStudents(request, response) {
-    readDatabase(request.db)
+    const database = process.argv[2];
+    readDatabase(database)
       .then((namesPerField) => {
         let msg = 'This is the list of our students\n';
 

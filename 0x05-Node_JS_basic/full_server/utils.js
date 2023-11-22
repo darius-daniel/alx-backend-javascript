@@ -3,6 +3,8 @@ const fs = require('fs')
 function readDatabase (path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (error, data) => {
+      const namesPerField = {};
+
       if (error) {
         reject(error);
       } else {
@@ -13,7 +15,6 @@ function readDatabase (path) {
           'age': 2,
           'field': 3
         };
-        const namesPerField = {};
 
         for (const row of table.slice(1)) {
           const column = row.split(',');
