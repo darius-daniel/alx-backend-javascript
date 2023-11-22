@@ -1,9 +1,8 @@
 const fs = require('fs');
 
-function countStudents (path) {
+function countStudents(path) {
   let fileContents;
-  const CS_Students = [];
-  const SWE_Students = [];
+  const namesByField = {};
 
   try {
     fileContents = fs.readFileSync(path, 'utf-8');
@@ -13,39 +12,51 @@ function countStudents (path) {
 
   const table = fileContents.split('\n').filter((value) => value !== '');
   const columnTitles = {
-    'firstName': 0,
-    'lastName': 1,
-    'age': 2,
-    'field': 3
+    firstName: 0,
+    lastName: 1,
+    age: 2,
+    field: 3,
   };
 
   for (const row of table) {
     const columns = row.split(',');
-    if (columns[columnTitles.field] === 'CS') {
-      CS_Students.push(columns[columnTitles.firstName]);
-    } else if (columns[columnTitles.field] === 'SWE') {
-      SWE_Students.push(columns[columnTitles.firstName]);
-    }
-  }
-  console.log(`Number of students: ${table.length - 1}`);
+    const field = columns[columnTitles.field];
+    const firstName = columns[columnTitles.firstName];
 
-  process.stdout.write(`Number of students in CS: ${CS_Students.length}. List: `);
-  for (const idx in CS_Students) {
-    let delimiter = '\n';
-    if (idx < CS_Students.length - 1) {
-      delimiter = ', ';
+    if (!Object.keys(namesByField).includes(field)) {
+      namesByField[field] = [];
     }
-    process.stdout.write(`${CS_Students[idx]}${delimiter}`);
+
+    namesByField[field].push(firstName);
   }
 
-  process.stdout.write(`Number of students in CS: ${SWE_Students.length}. List: `);
-  for (const idx in SWE_Students) {
+  let msg = `Number of students: ${table.length - 1}\n`;
+  const csStudents = namesByField.CS;
+  const sweStudents = namesByField.SWE;
+
+  msg += `Number of students in CS: ${csStudents.length}. List: `;
+  let idx = 0;
+  for (const student of csStudents) {
     let delimiter = '\n';
-    if (idx < SWE_Students.length - 1) {
+    if (idx < csStudents.length - 1) {
       delimiter = ', ';
     }
-    process.stdout.write(`${SWE_Students[idx]}${delimiter}`);
+    msg += `${student}${delimiter}`;
+    idx += 1;
   }
+
+  msg += `Number of students in SWE: ${sweStudents.length}. List: `;
+  idx = 0;
+  for (const student of sweStudents) {
+    let delimiter = '';
+    if (idx < sweStudents.length - 1) {
+      delimiter = ', ';
+    }
+    msg += `${student}${delimiter}`;
+    idx += 1;
+  }
+
+  console.log(msg);
 }
 
 module.exports = countStudents;
