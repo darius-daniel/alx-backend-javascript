@@ -15,21 +15,25 @@ const app = http.createServer((request, response) => {
         msg += `Number of students: ${csStudents.length + sweStudents.length}\n`;
         msg += `Number of students in CS: ${csStudents.length}. List: `;
 
-        for (const idx in csStudents) {
+        let idx = 0;
+        for (const student of csStudents) {
           let delimiter = '\n';
           if (idx < csStudents.length - 1) {
             delimiter = ', ';
           }
-          msg += `${csStudents[idx]}${delimiter}`;
+          msg += `${student}${delimiter}`;
+          idx += 1;
         }
 
         msg += `Number of students in SWE: ${sweStudents.length}. List: `;
-        for (const idx in sweStudents) {
+        idx = 0;
+        for (const student of sweStudents) {
           let delimiter = '\n';
           if (idx < sweStudents.length - 1) {
             delimiter = ', ';
           }
-          msg += `${sweStudents[idx]}${delimiter}`;
+          msg += `${student}${delimiter}`;
+          idx += 1;
         }
 
         response.end(msg);
