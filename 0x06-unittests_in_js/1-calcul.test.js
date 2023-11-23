@@ -248,12 +248,30 @@ describe('1-calcul.test.js', () => {
     });
     it('a: -4.5 / b: -1.5 ==> -2.5', () => {
       assert.equal(calculateNumber('DIVIDE', -4.5, -1.5), 4);
-    })
+    });
     it('a: -4.3 / b: -1.6 ==> -2', () => {
       assert.equal(calculateNumber('DIVIDE', -4.3, -1.6), 2);
     });
     it('a: -4.8 / b: -1.7 ==> -2.5', () => {
       assert.equal(calculateNumber('DIVIDE', -4.8, -1.7), 2.5);
     });
-  })
+
+    describe("Undefined", () => {
+      it('a: 1.4 + (sum) b: 4.5 ==> undefined', () => {
+        assert.equal(calculateNumber('sum', 1.4, 4.5), undefined);
+      });
+      it('a: 1.4 - (subtract) b: 4.5 ==> undefined', () => {
+        assert.equal(calculateNumber('subtract', 1.4, 4.5), undefined);
+      });
+      it('a: 1.4 / (divide) b: 4.5 ==> undefined', () => {
+        assert.equal(calculateNumber('divide', 1.4, 4.5), undefined);
+      });
+      it('a: 1.4 * (multiply) b: 4.5 ==> undefined', () => {
+        assert.equal(calculateNumber('multiply', 1.4, 4.5), undefined);
+      });
+      it('a: 1.4 * (MULTIPLY) b: 4.5 ==> undefined', () => {
+        assert.equal(calculateNumber('MULTIPLY', 1.4, 4.5), undefined);
+      });
+    })
+  });
 });
