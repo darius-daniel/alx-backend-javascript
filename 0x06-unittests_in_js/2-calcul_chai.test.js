@@ -180,6 +180,12 @@ describe('1-calcul.test.js', () => {
     it('a: 0   / b: 5   ==> 0', () => {
       expect(calculateNumber('DIVIDE', 0, 5)).to.equal(0);
     });
+    it('a: 0   / b: 3.3 ==> 0', () => {
+      expect(calculateNumber('DIVIDE', 0, 3.3)).to.equal(0);
+    });
+    it('a: 0   / b: 3.8 ==> 0', () => {
+      expect(calculateNumber('DIVIDE', 0, 3.8)).to.equal(0);
+    });
     it('a: 1.4 / b: 0.3 ==> "Error"', () => {
       expect(calculateNumber('DIVIDE', 1.4, 0.3)).to.equal('Error');
     });
