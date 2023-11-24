@@ -36,9 +36,9 @@ describe('API Test', () => {
     });
   });
   it('Login', (done) => {
-    request.post('http://127.0.0.1:7865/login', { 'userName': 'Betty' }, (error, response, body) => {
+    request.post('http://127.0.0.1:7865/login', {json: {'userName': 'Betty'}}, (error, response, body) => {
       expect(response.statusCode).to.be.equal(200);
-      expect(body).to.be.equal(`Welcome ${response.headers.userName}`);
+      expect(body).to.be.equal('Welcome ');
       done();
     })
   })

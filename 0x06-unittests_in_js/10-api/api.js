@@ -29,11 +29,11 @@ app.get('/available_payments', (request, response) => {
 
 app.post('/login', (request, response) => {
   let username = '';
-  
+
   if (request.body) {
     username = request.body.userName;
   }
-  response.setHeader('userName', username);
+
   response.send(`Welcome ${username}`);
 });
 
