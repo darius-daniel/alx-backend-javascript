@@ -11,7 +11,7 @@ app.get('/cart/:id', (request, response) => {
   const id = parseInt(request.params.id);
 
   if (isNaN(id) === true) {
-    response.status(404).send(response.header);
+    response.status(404);
   } else {
     response.send(`Payment methods for cart ${id}`);
   }
