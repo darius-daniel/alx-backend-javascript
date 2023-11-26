@@ -1,13 +1,13 @@
-const express = require('express');
+const express = require("express");
 
 const app = express();
-const port = 7865
+const port = 7865;
 
-app.get('/', (request, response) => {
-  response.send('Welcome to the payment system');
+app.get("/", (request, response) => {
+  response.send("Welcome to the payment system");
 });
 
-app.get('/cart/:id', (request, response) => {
+app.get("/cart/:id", (request, response) => {
   const id = parseInt(request.params.id);
 
   if (isNaN(id) === true) {
@@ -17,23 +17,23 @@ app.get('/cart/:id', (request, response) => {
   }
 });
 
-app.get('/available_payments', (request, response) => {
-  response.send(JSON.stringify({
+app.get("/available_payments", (request, response) => {
+  response.send(
+    JSON.stringify({
       payment_methods: {
         credit_cards: true,
-        paypal: false
-      }
-    })
+        paypal: false,
+      },
+    }),
   );
 });
 
-app.post('/login', (request, response) => {
-  let username = '';
+app.post("/login", (request, response) => {
+  let username = request.params[0];
 
-  if (request.body) {
-    username = request.body.userName;
+  if (request.is('json') === true) {
+    username = request.query;
   }
-
   response.send(`Welcome ${username}`);
 });
 
