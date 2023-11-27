@@ -4,6 +4,8 @@ const calculateNumber = require('./1-calcul');
 describe('1-calcul.test.js', () => {
   it('calculateNumber(1, 3) should return 4', () => {
     expect(calculateNumber('SUM', 1, 3)).to.equal(4);
+    expect(calculateNumber('SUBTRACT', 1, 3)).to.equal(-2);
+    expect(calculateNumber('DIVIDE', 0, 5)).to.equal(0);
   });
   it('calculateNumber(1, 3.7) should return 5', () => {
     expect(calculateNumber('SUM', 1, 3.7)).to.equal(5);
@@ -87,9 +89,6 @@ describe('1-calcul.test.js', () => {
     expect(calculateNumber('SUM', -1.6, -3.7)).to.equal(-6);
   });
 
-  it('calculateNumber(1, 3) should return -2', () => {
-    expect(calculateNumber('SUBTRACT', 1, 3)).to.equal(-2);
-  });
   it('calculateNumber(1, 3.7) should return -3', () => {
     expect(calculateNumber('SUBTRACT', 1, 3.7)).to.equal(-3);
   });
@@ -172,9 +171,6 @@ describe('1-calcul.test.js', () => {
     expect(calculateNumber('SUBTRACT', -1.6, -3.7)).to.equal(2);
   });
 
-  it('a: 0   / b: 5   ==> 0', () => {
-    expect(calculateNumber('DIVIDE', 0, 5)).to.equal(0);
-  });
   it('a: 0   / b: 3.3 ==> 0', () => {
     expect(calculateNumber('DIVIDE', 0, 3.3)).to.equal(0);
   });
